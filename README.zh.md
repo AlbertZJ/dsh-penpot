@@ -10,13 +10,16 @@
 
 ## 功能
 
-- **9 个 `penpot_*` 工具**，直连 Penpot REST/RPC 命令 API：
+- **13 个 `penpot_*` 工具**，直连 Penpot REST/RPC 命令 API，**读 + 写**：
   连通性/身份检查、团队 → 项目 → 文件遍历、文件搜索、文件概览（页面 +
-  设计令牌集合）、页面画板结构树、未解决评论、`.penpot` 二进制归档导出。
-  认证使用个人访问令牌（`Authorization: Token` 方案），与 Penpot
-  网页端使用的是同一套后端 API。
-- **2 个打包技能**：`penpot-design-review`（基于实时数据的结构化设计走查）
-  与 `penpot-design-handoff`（面向开发的清单 + 令牌 + 评论 + 可移植归档）。
+  设计令牌集合）、页面画板结构树、未解决评论、`.penpot` 二进制归档导出；
+  以及**建项目**、**建文件**、**导入 `.penpot` 归档**、**上传模型生成的
+  SVG/PNG/JPEG/WebP 资产**。认证使用个人访问令牌（`Authorization: Token`
+  方案），与 Penpot 网页端使用的是同一套后端 API。
+- **3 个打包技能**：`penpot-design-review`（基于实时数据的结构化设计走查）、
+  `penpot-design-handoff`（面向开发的清单 + 令牌 + 评论 + 可移植归档）、
+  `penpot-design-generate`（建项目/文件，把模型生成的 SVG 画板作为资产
+  交付进 Penpot——写入路径，不走 MCP、不做画布自动化）。
 
 ## 要求
 

@@ -11,15 +11,19 @@ English | [中文](README.zh.md)
 
 ## What it does
 
-- **9 `penpot_*` tools** over Penpot's REST/RPC command API:
-  connectivity/profile check, teams → projects → files walk, file search,
-  file overview (pages + design-token sets), page board tree, open comment
-  threads, and binary `.penpot` archive export. Authentication uses a
-  personal access token via the `Authorization: Token` scheme — the same
-  backend API Penpot's own web app uses.
-- **2 bundled skills**: `penpot-design-review` (structured design review from
-  live data) and `penpot-design-handoff` (inventory + tokens + comments +
-  portable archive for developers).
+- **13 `penpot_*` tools** over Penpot's REST/RPC command API, read **and**
+  write: connectivity/profile check, teams → projects → files walk, file
+  search, file overview (pages + design-token sets), page board tree, open
+  comment threads, binary `.penpot` archive export; plus **create project**,
+  **create file**, **import `.penpot` archive**, and **upload generated
+  SVG/PNG/JPEG/WebP assets** into a file. Authentication uses a personal
+  access token via the `Authorization: Token` scheme — the same backend API
+  Penpot's own web app uses.
+- **3 bundled skills**: `penpot-design-review` (structured design review from
+  live data), `penpot-design-handoff` (inventory + tokens + comments +
+  portable archive for developers), and `penpot-design-generate` (create a
+  project/file and deliver model-authored SVG boards as Penpot assets — the
+  write path, no MCP, no canvas automation).
 
 ## Requirements
 

@@ -1,6 +1,6 @@
 {
   "name": "dsh-penpot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Penpot design-platform integration for DeepSeek Harness: REST/RPC tools (no MCP) plus bundled design-review and handoff skills. Works with penpot.app SaaS or any self-hosted Penpot.",
   "keywords": [
     "deepseek-harness",

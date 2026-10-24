@@ -51,6 +51,16 @@ interface PenpotErrorBody {
   readonly hint?: string
 }
 
+/** Media types Penpot's upload-file-media-object accepts, keyed by extension. */
+const MIME_BY_EXTENSION: Record<string, string> = {
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.gif': 'image/gif',
+}
+
 function errorHint(status: number, body: string): string {
   try {
     const parsed = JSON.parse(body) as PenpotErrorBody
@@ -100,6 +110,60 @@ export class PenpotClient {
     } catch {
       throw new PenpotError(`penpot: ${command} returned non-JSON (first 200 chars): ${body.slice(0, 200)}`)
     }
+  }
+
+  /**
+   * Invoke a multipart-only command: form fields plus one file upload.
+   * Used by import-binfile (`file`) and upload-file-media-object (`content`).
+   */
+  async rpcMultipart<T>(command: string, fields: Record<string, string>, fileField: string, file: Blob): Promise<T> {
+    const origin = this.baseUrl.replace(/\/+$/u, '')
+    const form = new FormData()
+    for (const [key, value] of Object.entries(fields)) form.set(key, value)
+    form.set(fileField, file, fields.name ?? fileField)
+    let response: Response
+    try {
+      response = await fetch(`${origin}/api/rpc/command/${command}`, {
+        method: 'POST',
+        headers: { authorization: `Token ${this.token}` },
+        body: form,
+        signal: AbortSignal.timeout(this.timeoutMs * 4),
+      })
+    } catch (cause) {
+      throw new PenpotError(`penpot: cannot reach ${this.baseUrl} (${command}): ${cause instanceof Error ? cause.message : String(cause)}`)
+    }
+    const body = await response.text()
+    if (!response.ok) {
+      if (response.status === 401 || response.status === 403) throw new PenpotError(`penpot: authentication failed (HTTP ${String(response.status)}): check PENPOT_TOKEN`)
+      throw new PenpotError(`penpot: ${command} failed — ${errorHint(response.status, body)}`)
+    }
+    if (body.length === 0) return undefined as T
+    try {
+      return JSON.parse(body) as T
+    } catch {
+      throw new PenpotError(`penpot: ${command} returned non-JSON (first 200 chars): ${body.slice(0, 200)}`)
+    }
+  }
+
+  /** Import a local `.penpot` archive into a project (multipart upload). */
+  async importBinfile(projectId: string, name: string, archive: Uint8Array): Promise<unknown> {
+    return this.rpcMultipart('import-binfile', { name, 'project-id': projectId }, 'file', new Blob([archive]))
+  }
+
+  /**
+   * Upload generated media (SVG/PNG/JPEG/WebP/GIF) into a file's assets.
+   * Media type is derived from the file-name extension, matching Penpot's
+   * upload-file-media-object validation.
+   */
+  async uploadAsset(fileId: string, name: string, content: Uint8Array, isLocal: boolean): Promise<unknown> {
+    const extension = `.${name.split('.').pop()?.toLowerCase() ?? ''}`
+    const mime = MIME_BY_EXTENSION[extension]
+    if (mime === undefined) throw new PenpotError(`penpot: unsupported asset extension "${extension}" (use svg/png/jpg/jpeg/webp/gif)`)
+    return this.rpcMultipart('upload-file-media-object', {
+      'file-id': fileId,
+      'is-local': String(isLocal),
+      name,
+    }, 'content', new Blob([content], { type: mime }))
   }
 
   /**
