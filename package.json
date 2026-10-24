@@ -1,0 +1,84 @@
+{
+  "name": "dsh-penpot",
+  "version": "0.1.0",
+  "description": "Penpot design-platform integration for DeepSeek Harness: REST/RPC tools (no MCP) plus bundled design-review and handoff skills. Works with penpot.app SaaS or any self-hosted Penpot.",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "penpot",
+    "design",
+    "design-tokens",
+    "skills"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "AlbertZJ",
+    "url": "https://github.com/AlbertZJ"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlbertZJ/dsh-penpot.git"
+  },
+  "homepage": "https://github.com/AlbertZJ/dsh-penpot#readme",
+  "bugs": {
+    "url": "https://github.com/AlbertZJ/dsh-penpot/issues"
+  },
+  "packageManager": "pnpm@11.28.5",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "icon": "./icon.svg",
+  "exports": {
+    ".": "./lib/index.js",
+    "./*": "./lib/*.js",
+    "./locale/en.json": "./locale/en.json",
+    "./locale/zh.json": "./locale/zh.json",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/*.js",
+    "assets",
+    "locale",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.19.0",
+    "dsh": ">=0.2.1-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsdown && node scripts/clean-build.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.0",
+    "@deepseek-ai/dsh-skill": ">=0.2.1-rc.2 <0.3.0",
+    "@deepseek-ai/dsh-tools": ">=0.2.1-rc.2 <0.3.0",
+    "@deepseek-ai/schemastery": "^3.18.0"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.0",
+    "@deepseek-ai/dsh-skill": ">=0.2.1-rc.2 <0.3.0",
+    "@deepseek-ai/dsh-tools": ">=0.2.1-rc.2 <0.3.0",
+    "@deepseek-ai/schemastery": "^3.18.0",
+    "@types/node": "^22.20.1",
+    "tsdown": "^0.22.2",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "yaml": "^2.9.1"
+  }
+}

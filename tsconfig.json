@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es2024",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["es2024"],
+    "types": ["node"],
+    "rootDir": "src",
+    "outDir": "lib/types",
+    "declaration": false,
+    "sourceMap": false,
+    "strict": true,
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": false,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"]
+}

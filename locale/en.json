@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Penpot integration",
+    "description": "Penpot design-platform tools (REST, no MCP) plus design-review and handoff skills. Set PENPOT_TOKEN to connect."
+  }
+}

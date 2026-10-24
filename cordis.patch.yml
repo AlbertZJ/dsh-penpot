@@ -1,0 +1,9 @@
+# dsh-penpot bundle patch.
+#
+# 一行宿主插件：注册 Penpot REST/RPC 工具（不走 MCP，直接打 Penpot 后端
+# /api/rpc/command/*），并提供一个打包技能目录（设计走查 / 设计交付）。
+# 配置全部有默认值：baseUrl 指向官方 SaaS，令牌从环境变量 PENPOT_TOKEN 读。
+
+- insert:
+    - id: penpot
+      name: 'dsh-penpot'

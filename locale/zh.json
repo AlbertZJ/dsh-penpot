@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Penpot 集成",
+    "description": "Penpot 设计平台工具（直连 REST，不走 MCP）加设计走查与交付技能。配置 PENPOT_TOKEN 即可连接。"
+  }
+}
